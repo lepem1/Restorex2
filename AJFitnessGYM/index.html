@@ -50,6 +50,24 @@
             background-size: cover;
             background-position: center;
         }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 30s linear infinite;
+        }
+
+        .animate-scroll:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 
@@ -370,6 +388,61 @@
                         Explore Our Approach
                     </button>
                 </div>
+            </div>
+        </div>
+    </section>
+    <!-- Gallery Section -->
+    <section class="py-24 bg-surface-dark overflow-hidden border-y border-border-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+            <h2 class="text-primary font-bold text-sm tracking-[0.2em] uppercase mb-4">Inside the Arena</h2>
+            <h3 class="text-4xl font-black text-white">Where Champions Are Made</h3>
+        </div>
+
+        <div class="relative w-full flex overflow-hidden group">
+            <div class="flex animate-scroll hover:pause gap-6">
+                <!-- Original Set -->
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoAGriTlk3FPPI6YA3R07H86D-JrA0u3eQaXZoxvDdKfAn5K0aUiicRQRqaguOlesYb05TxyrXknyc6pbBMjGL8fZDTvq66lLRcHMqrwl3qruLYLicQT1BRkFxtk98Ko0XUFUw2Ij0pw0lD=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Interior">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqFIBCCVtXILLXPm6VHPmX_NEuUrpmwKVUhLrTx7t_jQ05cp27XF7U_DZipGeksGw3FsyyJy4ML1_pAvTwfqI5ZyaOGF6zoA3rTgLxqcNFgfa9nGM-tBPWWA1lBiztEyRkKIkrYSQry_Rpo=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Equipment">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerBXJ2ywJOaG4BVvxAlgI_yr-9up4c_n9cmBtcEr6G4qvfcL-W4n0mUIUSQdOOMbLB5xcF-EbjiDAbkExFyWLhtY_-jBoaP0yPgqyKjJrJbv_G5zHKCSB1IaZp6Uaic5UBAfrVO2Ct8IueJ=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Training Zone">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepkAZYG_BDsueCWSSvovGfUf6lTxaY_SQfh0KlWSaoaCts7JKRealignM4-UUfCfF0FL6kzeu_chCZkBDS3aIjjvQNDXtqm_ev97iDAQQ4JNYlwgVqgUvrzvopLBaSENU2r6zzG7xXIWRo=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Weights Area">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwereW3L5pP5ZMxXLgwsOgJ9hMel21dnNhRhOX5ebxsr5Kzvu8U-AqUIqMYqgan76FSLbr1uTJyWXg7sDSNFMLXM1uamFUNGE7YlXXBshmL9f2aVY42kSwuENuMwE_dXsejVr8JsgLVPENzB2=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Cardio Section">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo5xGBAAMHsq-LwUUaUwZCQJdAfW7PztNpsnxMCC51kqQ3AldP157nrEl8u5HxyjE4WTP_ZWMXd6-ebDdc2eaN-x28booeOfkDGWY8woWJ7CgLJ0ffSPqAzyvm8x7f92u_cKWNl97GTs_xr=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Strength Training">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweopGBNvZSsj-KauT4SFRePA_JUMtqSRn7SnxK_ydtxEIeFvUeuwDZ0HWApvCwCsUb3VpnT6PvVYze-XdyEhevf2ZNhLUcxyQJJWCBQp2XXK9dl3BVzmGzJrrQcSbQ7gMF1zF66oLetu2L4=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Layout">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo_ERCg7FPGfOB0pyJWiHn0JqZFcRgUZHDrtCuNjiIONczKt-VX_uFYGVbDucRYsbxee_2M6FbsGhGMNv_j7YTfrhrkbrmDm6uKDfM9shyIs0LUYZA4j1T7gsPlaF-q3CozlxooQms172Q=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Functional Area">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoBUrJxlPHS4Hlj_11CONOjaUh0B6NHA5vF-f_t1N8RSCtor40TcETguACOQ8rc29IaKmAwrpN6tKqXwA7MZIIVgtJ9iHQZg-H6xXiGljRNidw_c_i_3f4LDWFATLtEeCo1mI4S_6NXCBMN=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Dumbbells Rack">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerOw4eHBSPwJk9n5tP6zoiiEtY71T-ByuA6lcmKOGmAy5949PKcBwniCq-w3Yh4st3T0krn5yrpkswGckoXA7YbjA64sZxOZCqGsaw-dy3Sm2EfhJw7KkqiQnI5nmVqrPXxm5te0a1dz-k=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym View">
+
+                <!-- Duplicate Set for Seamless Loop -->
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoAGriTlk3FPPI6YA3R07H86D-JrA0u3eQaXZoxvDdKfAn5K0aUiicRQRqaguOlesYb05TxyrXknyc6pbBMjGL8fZDTvq66lLRcHMqrwl3qruLYLicQT1BRkFxtk98Ko0XUFUw2Ij0pw0lD=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Interior">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqFIBCCVtXILLXPm6VHPmX_NEuUrpmwKVUhLrTx7t_jQ05cp27XF7U_DZipGeksGw3FsyyJy4ML1_pAvTwfqI5ZyaOGF6zoA3rTgLxqcNFgfa9nGM-tBPWWA1lBiztEyRkKIkrYSQry_Rpo=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Equipment">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerBXJ2ywJOaG4BVvxAlgI_yr-9up4c_n9cmBtcEr6G4qvfcL-W4n0mUIUSQdOOMbLB5xcF-EbjiDAbkExFyWLhtY_-jBoaP0yPgqyKjJrJbv_G5zHKCSB1IaZp6Uaic5UBAfrVO2Ct8IueJ=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Training Zone">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepkAZYG_BDsueCWSSvovGfUf6lTxaY_SQfh0KlWSaoaCts7JKRealignM4-UUfCfF0FL6kzeu_chCZkBDS3aIjjvQNDXtqm_ev97iDAQQ4JNYlwgVqgUvrzvopLBaSENU2r6zzG7xXIWRo=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Weights Area">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwereW3L5pP5ZMxXLgwsOgJ9hMel21dnNhRhOX5ebxsr5Kzvu8U-AqUIqMYqgan76FSLbr1uTJyWXg7sDSNFMLXM1uamFUNGE7YlXXBshmL9f2aVY42kSwuENuMwE_dXsejVr8JsgLVPENzB2=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Cardio Section">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo5xGBAAMHsq-LwUUaUwZCQJdAfW7PztNpsnxMCC51kqQ3AldP157nrEl8u5HxyjE4WTP_ZWMXd6-ebDdc2eaN-x28booeOfkDGWY8woWJ7CgLJ0ffSPqAzyvm8x7f92u_cKWNl97GTs_xr=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Strength Training">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweopGBNvZSsj-KauT4SFRePA_JUMtqSRn7SnxK_ydtxEIeFvUeuwDZ0HWApvCwCsUb3VpnT6PvVYze-XdyEhevf2ZNhLUcxyQJJWCBQp2XXK9dl3BVzmGzJrrQcSbQ7gMF1zF66oLetu2L4=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym Layout">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo_ERCg7FPGfOB0pyJWiHn0JqZFcRgUZHDrtCuNjiIONczKt-VX_uFYGVbDucRYsbxee_2M6FbsGhGMNv_j7YTfrhrkbrmDm6uKDfM9shyIs0LUYZA4j1T7gsPlaF-q3CozlxooQms172Q=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Functional Area">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweoBUrJxlPHS4Hlj_11CONOjaUh0B6NHA5vF-f_t1N8RSCtor40TcETguACOQ8rc29IaKmAwrpN6tKqXwA7MZIIVgtJ9iHQZg-H6xXiGljRNidw_c_i_3f4LDWFATLtEeCo1mI4S_6NXCBMN=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Dumbbells Rack">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerOw4eHBSPwJk9n5tP6zoiiEtY71T-ByuA6lcmKOGmAy5949PKcBwniCq-w3Yh4st3T0krn5yrpkswGckoXA7YbjA64sZxOZCqGsaw-dy3Sm2EfhJw7KkqiQnI5nmVqrPXxm5te0a1dz-k=s680-w680-h510-rw"
+                    class="h-64 w-96 object-cover rounded-2xl shadow-lg border border-white/10" alt="Gym View">
             </div>
         </div>
     </section>
