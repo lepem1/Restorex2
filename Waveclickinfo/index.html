@@ -42,6 +42,16 @@
             mask-repeat: no-repeat;
             mask-position: center;
         }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
     </style>
 </head>
 
@@ -58,7 +68,9 @@
                 class="hidden md:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest text-text-muted">
                 <a class="hover:text-primary transition-colors" href="#services">Services</a>
                 <a class="hover:text-primary transition-colors" href="#portfolio">Portfolio</a>
+                <a class="hover:text-primary transition-colors" href="#how-we-work">Process</a>
                 <a class="hover:text-primary transition-colors" href="#leadership">Leadership</a>
+                <a class="hover:text-primary transition-colors" href="#blog">Blog</a>
                 <a class="bg-primary text-black px-6 py-2.5 rounded-full flex items-center space-x-2 hover:opacity-90 transition-all"
                     href="#contact">
                     <span>Let's Talk</span>
@@ -244,6 +256,62 @@
             </div>
         </div>
     </section>
+    <section class="py-32 bg-bg-deep relative overflow-hidden fade-in-section" id="how-we-work">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-24">
+                <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">• How We Work</p>
+                <h2 class="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Our Process</h2>
+                <p class="text-text-muted max-w-xl mx-auto">A streamlined approach to delivering excellence, from
+                    concept to deployment.</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div
+                    class="bg-bg-card p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-colors duration-300 group">
+                    <div
+                        class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-black transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Discovery</h4>
+                    <p class="text-sm text-text-muted leading-relaxed">We dive deep into your business goals, target
+                        audience, and market landscape.</p>
+                </div>
+                <!-- Step 2 -->
+                <div
+                    class="bg-bg-card p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-colors duration-300 group">
+                    <div
+                        class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-black transition-colors">
+                        <span class="material-symbols-outlined">design_services</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Strategy & Design</h4>
+                    <p class="text-sm text-text-muted leading-relaxed">Crafting a bespoke roadmap and visual identity
+                        that aligns with your vision.</p>
+                </div>
+                <!-- Step 3 -->
+                <div
+                    class="bg-bg-card p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-colors duration-300 group">
+                    <div
+                        class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-black transition-colors">
+                        <span class="material-symbols-outlined">code</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Development</h4>
+                    <p class="text-sm text-text-muted leading-relaxed">Bringing designs to life with clean, scalable,
+                        and high-performance code.</p>
+                </div>
+                <!-- Step 4 -->
+                <div
+                    class="bg-bg-card p-10 rounded-3xl border border-white/5 hover:border-primary/50 transition-colors duration-300 group">
+                    <div
+                        class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-black transition-colors">
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Launch & Growth</h4>
+                    <p class="text-sm text-text-muted leading-relaxed">Deploying your solution and optimizing for
+                        continuous growth and impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="py-32 bg-white text-black rounded-t-[4rem]" id="portfolio">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-end mb-16">
@@ -349,6 +417,99 @@
             </div>
         </div>
     </section>
+
+    <!-- Blog Section -->
+    <section class="py-32 bg-black fade-in-section" id="blog">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">• Our Insights</p>
+                    <h2 class="text-5xl font-bold tracking-tighter mb-4">Latest from Blog</h2>
+                    <p class="text-text-muted max-w-sm">Trends, strategies, and insights from the digital world.</p>
+                </div>
+                <!-- Search and Filter Controls -->
+                <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">search</span>
+                        <input type="text" id="searchInput" placeholder="Search insights..."
+                            class="bg-white/5 border border-white/10 rounded-full pl-10 pr-6 py-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder-white/30 w-full sm:w-64 transition-all">
+                    </div>
+                    <select id="sortSelect"
+                        class="bg-white/5 border border-white/10 rounded-full px-6 py-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer w-full sm:w-auto">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tags Filter -->
+            <div class="flex flex-wrap gap-2 mb-12" id="tagsContainer">
+                <button
+                    class="px-5 py-2 rounded-full border border-primary bg-primary text-black text-xs font-bold uppercase transition-all"
+                    data-tag="all">All</button>
+                <!-- Dynamic tags will be injected here -->
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+                <!-- Loading State -->
+                <div class="col-span-full h-64 flex items-center justify-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-16 flex justify-center gap-4" id="paginationControls">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-32 bg-bg-card border-t border-white/5 relative fade-in-section" id="contact">
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <p class="text-primary text-xs font-bold uppercase tracking-widest mb-4">• Contact Us</p>
+                <h2 class="text-5xl font-bold tracking-tighter mb-6">Start Your Project</h2>
+                <p class="text-text-muted">Ready to transform your digital presence? Fill out the form below and we'll
+                    get back to you shortly.</p>
+            </div>
+
+            <form class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-text-muted ml-1">Name</label>
+                        <input type="text"
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder-white/20"
+                            placeholder="John Doe">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-text-muted ml-1">Email</label>
+                        <input type="email"
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder-white/20"
+                            placeholder="john@example.com">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-text-muted ml-1">Subject</label>
+                    <input type="text"
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder-white/20"
+                        placeholder="Project Inquiry">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-text-muted ml-1">Message</label>
+                    <textarea rows="5"
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder-white/20"
+                        placeholder="Tell us about your project..."></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-primary text-black font-bold uppercase tracking-widest py-5 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
     <footer class="bg-bg-card pt-32 pb-12 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-32">
@@ -392,16 +553,239 @@
                     </div>
                     <span class="text-lg font-bold tracking-tighter">Wave Click Info</span>
                 </div>
-                <p class="text-[10px] text-text-muted uppercase tracking-[0.3em]">© 2026 WAVE CLICK INFO. ALL RIGHTS
-                    RESERVED.</p>
-                <div class="flex space-x-6 text-[10px] uppercase font-bold tracking-widest text-text-muted">
-                    <a class="hover:text-primary" href="#">Privacy</a>
-                    <a class="hover:text-primary" href="#">Terms</a>
+                <div class="flex flex-col items-center gap-2">
+                    <p class="text-[10px] text-text-muted uppercase tracking-[0.3em]">© 2026 WAVE CLICK INFO. ALL RIGHTS
+                        RESERVED.</p>
+                    <p class="text-[10px] text-text-muted uppercase tracking-widest">
+                        Website powered by <a href="https://f9xr.github.io" target="_blank"
+                            class="text-primary hover:underline">F9XR Team</a>
+                    </p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-text-muted hover:text-[#1877F2] transition-colors"><i
+                            class="fab fa-facebook-f text-lg"></i></a>
+                    <!-- Facebook - using generic class, assume fontawesome or similar loaded, wait user didn't ask for fontawesome but mentioned icons. I will add SVGs to be safe since FA isn't clearly loaded globally -->
+                    <a href="#" class="text-text-muted hover:text-[#E1306C] transition-colors">
+                        <!-- Instagram SVG -->
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-text-muted hover:text-white transition-colors">
+                        <!-- X (Twitter) SVG -->
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-text-muted hover:text-[#1877F2] transition-colors">
+                        <!-- Facebook SVG -->
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script>
+            // --- Blog Engine (JSONP) ---
+            (function () {
+                const CONFIG = {
+                    feedUrl: "https://growwithguidance.blogspot.com/feeds/posts/default",
+                    itemsPerLoad: 6,
+                    icons: {
+                        bookmarkOn: "bookmark",
+                        bookmarkOff: "bookmark_border",
+                    }
+                };
+
+                let state = {
+                    rawData: [],
+                    filteredData: [],
+                    watchlist: JSON.parse(localStorage.getItem('waveClick_watchlist') || '[]'),
+                    activeTag: 'all',
+                    currentPage: 1
+                };
+
+                // JSONP Fetcher
+                window.fetchSource = function () {
+                    const script = document.createElement('script');
+                    script.src = `${CONFIG.feedUrl}?alt=json-in-script&callback=processBlogData&max-results=50`;
+                    document.body.appendChild(script);
+                };
+
+                // Global Callback for JSONP
+                window.processBlogData = function (data) {
+                    if (!data || !data.feed || !data.feed.entry) {
+                        document.getElementById('blogGrid').innerHTML = '<div class="col-span-full text-center text-text-muted">No posts found.</div>';
+                        return;
+                    }
+
+                    state.rawData = data.feed.entry.map(processEntry);
+                    applyFilters();
+                };
+
+                function processEntry(entry) {
+                    const id = entry.id.$t.split('-').pop();
+                    const title = entry.title.$t;
+                    // Extract first image
+                    const content = entry.content ? entry.content.$t : '';
+                    const doc = new DOMParser().parseFromString(content, 'text/html');
+                    const img = doc.querySelector('img');
+                    const image = img ? img.src : 'https://placehold.co/600x400/121212/D4FF37?text=No+Image';
+
+                    // Get Categories
+                    const categories = entry.category ? entry.category.map(c => c.term) : [];
+                    // Get URL
+                    const link = entry.link.find(l => l.rel === 'alternate').href;
+                    // Date
+                    const date = new Date(entry.published.$t).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    });
+
+                    return { id, title, image, categories, link, date, summary: doc.body.textContent.substring(0, 100) + '...' };
+                }
+
+                function applyFilters() {
+                    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                    const sortOrder = document.getElementById('sortSelect').value;
+                    const activeTag = state.activeTag;
+
+                    let filtered = state.rawData.filter(post => {
+                        const matchesSearch = post.title.toLowerCase().includes(searchTerm);
+                        const matchesTag = activeTag === 'all' || post.categories.includes(activeTag);
+                        return matchesSearch && matchesTag;
+                    });
+
+                    if (sortOrder === 'newest') {
+                        // Already sorted by feed usually, but valid to keep structure
+                        // If needed: filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
+                    } else {
+                        filtered.reverse();
+                    }
+
+                    state.filteredData = filtered;
+                    state.currentPage = 1;
+                    renderTags();
+                    renderGrid();
+                }
+
+                function renderTags() {
+                    const tagsContainer = document.getElementById('tagsContainer');
+                    const allTags = new Set();
+                    state.rawData.forEach(post => post.categories.forEach(tag => allTags.add(tag)));
+
+                    let html = `<button class="px-5 py-2 rounded-full border ${state.activeTag === 'all' ? 'border-primary bg-primary text-black' : 'border-white/10 bg-white/5 hover:border-white/30'} text-xs font-bold uppercase transition-all" onclick="filterByTag('all')">All</button>`;
+
+                    allTags.forEach(tag => {
+                        const isActive = state.activeTag === tag;
+                        html += `<button class="px-5 py-2 rounded-full border ${isActive ? 'border-primary bg-primary text-black' : 'border-white/10 bg-white/5 hover:border-white/30'} text-xs font-bold uppercase transition-all" onclick="filterByTag('${tag}')">${tag}</button>`;
+                    });
+
+                    tagsContainer.innerHTML = html;
+                }
+
+                window.filterByTag = function (tag) {
+                    state.activeTag = tag;
+                    applyFilters();
+                }
+
+                function renderGrid() {
+                    const grid = document.getElementById('blogGrid');
+                    const start = (state.currentPage - 1) * CONFIG.itemsPerLoad;
+                    const end = start + CONFIG.itemsPerLoad;
+                    const pageData = state.filteredData.slice(start, end);
+
+                    if (pageData.length === 0) {
+                        grid.innerHTML = '<div class="col-span-full text-center text-text-muted py-12">No matching insights found.</div>';
+                        document.getElementById('paginationControls').innerHTML = '';
+                        return;
+                    }
+
+                    grid.innerHTML = pageData.map(post => `
+                    <div class="bg-bg-card rounded-2xl overflow-hidden group border border-white/5 hover:border-primary/30 transition-all duration-500">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full border border-white/10">
+                                    ${post.categories[0] || 'Insight'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-[10px] text-text-muted uppercase font-bold tracking-widest mb-3">
+                                <span>${post.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                                <a href="${post.link}" target="_blank">${post.title}</a>
+                            </h3>
+                            <a href="${post.link}" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white mt-4 group-hover:gap-3 transition-all">
+                                Read More <span class="material-symbols-outlined text-sm text-primary">north_east</span>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+
+                    renderPagination();
+                }
+
+                function renderPagination() {
+                    const totalPages = Math.ceil(state.filteredData.length / CONFIG.itemsPerLoad);
+                    const controls = document.getElementById('paginationControls');
+
+                    if (totalPages <= 1) {
+                        controls.innerHTML = '';
+                        return;
+                    }
+
+                    let html = '';
+                    if (state.currentPage > 1) {
+                        html += `<button onclick="changePage(${state.currentPage - 1})" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all"><span class="material-symbols-outlined">chevron_left</span></button>`;
+                    }
+
+                    html += `<span class="flex items-center px-4 text-xs font-bold text-text-muted">Page ${state.currentPage} of ${totalPages}</span>`;
+
+                    if (state.currentPage < totalPages) {
+                        html += `<button onclick="changePage(${state.currentPage + 1})" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-black transition-all"><span class="material-symbols-outlined">chevron_right</span></button>`;
+                    }
+
+                    controls.innerHTML = html;
+                }
+
+                window.changePage = function (page) {
+                    state.currentPage = page;
+                    renderGrid();
+                    document.getElementById('blog').scrollIntoView({ behavior: 'smooth' });
+                }
+
+                // Init Events
+                document.getElementById('searchInput').addEventListener('input', () => { applyFilters(); });
+                document.getElementById('sortSelect').addEventListener('change', () => { applyFilters(); });
+
+                // Initialize
+                document.addEventListener('DOMContentLoaded', fetchSource);
+
+            })();
+
+        // --- Intersection Observer for Animations ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 
 </html>
