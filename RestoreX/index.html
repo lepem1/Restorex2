@@ -89,7 +89,7 @@
             display: flex;
             justify-content: center;
             z-index: 100;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
             transform: translateY(-20px);
@@ -108,6 +108,7 @@
             border-radius: 99px;
             display: flex;
             gap: 0.5rem;
+            align-items: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
@@ -131,15 +132,56 @@
             color: var(--accent);
             background-color: rgba(255, 255, 255, 0.05);
         }
+        
+        .mobile-brand {
+            display: none;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
 
         .hero {
-            padding: 6rem 5% 2rem;
-            min-height: 75vh;
+            position: relative;
+            padding: 8.5rem 5% 3rem;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            filter: blur(60px);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .hero-content {
@@ -749,6 +791,43 @@
         }
 
         @media (max-width: 900px) {
+            .mobile-brand,
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .pill-nav {
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                max-width: 500px;
+                padding: 0.8rem 1rem;
+                transition: border-radius 0.3s ease;
+            }
+            .pill-nav.nav-open {
+                border-radius: 20px;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                order: 4;
+                padding-top: 1rem;
+                margin-top: 0.5rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+            .pill-nav.nav-open .nav-links {
+                display: flex;
+            }
+            .pill-nav a.login-btn {
+                margin-left: auto;
+                margin-right: 0.5rem;
+            }
+            
             .hero-content {
                 flex-direction: column-reverse;
                 text-align: center;
@@ -794,14 +873,20 @@
 <body>
 
     <div class="navbar-container">
-        <nav class="pill-nav">
-            <a href="#" class="active">Home</a>
-            <a href="#features">Features</a>
-            <a href="https://discord.com/discovery/applications/1484501968759160914" target="_blank">Discord Page</a>
-            <a href="#faq">FAQ</a>
-            <a href="contact.html">Contact Us</a>
+        <nav class="pill-nav" id="pillNav">
+            <span class="mobile-brand">RestoreX</span>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#features">Features</a>
+                <a href="https://discord.com/discovery/applications/1484501968759160914" target="_blank">Discord Page</a>
+                <a href="#faq">FAQ</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
             <a href="https://discord.com/oauth2/authorize?client_id=1484501968759160914&response_type=code&redirect_uri=https%3A%2F%2Frestorex.ddns.net%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds"
                 class="login-btn" target="_blank">Login</a>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('pillNav').classList.toggle('nav-open')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </nav>
     </div>
 
