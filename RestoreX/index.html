@@ -89,7 +89,7 @@
             display: flex;
             justify-content: center;
             z-index: 100;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
             transform: translateY(-20px);
@@ -108,6 +108,7 @@
             border-radius: 99px;
             display: flex;
             gap: 0.5rem;
+            align-items: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
@@ -131,15 +132,65 @@
             color: var(--accent);
             background-color: rgba(255, 255, 255, 0.05);
         }
+        
+        .nav-mobile-header {
+            display: none;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-brand {
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding-left: 0.5rem;
+        }
+
+        .mobile-menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .mobile-login {
+            display: none !important;
+        }
 
         .hero {
-            padding: 6rem 5% 2rem;
-            min-height: 75vh;
+            position: relative;
+            padding: 8.5rem 5% 3rem;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            filter: blur(60px);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .hero-content {
@@ -749,6 +800,47 @@
         }
 
         @media (max-width: 900px) {
+            .nav-mobile-header {
+                display: flex;
+            }
+            .pill-nav {
+                flex-direction: column;
+                width: 90%;
+                max-width: 500px;
+                padding: 0.8rem 1.2rem;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .pill-nav.nav-open {
+                border-radius: 24px;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                padding-top: 1.5rem;
+                padding-bottom: 0.5rem;
+                margin-top: 0.5rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+            .pill-nav.nav-open .nav-links {
+                display: flex;
+            }
+            .desktop-login {
+                display: none !important;
+            }
+            .pill-nav a.mobile-login {
+                display: flex !important;
+                justify-content: center;
+                margin-top: 1rem;
+                width: 100%;
+                margin-left: 0;
+            }
+            
             .hero-content {
                 flex-direction: column-reverse;
                 text-align: center;
@@ -794,14 +886,24 @@
 <body>
 
     <div class="navbar-container">
-        <nav class="pill-nav">
-            <a href="#" class="active">Home</a>
-            <a href="#features">Features</a>
-            <a href="https://discord.com/discovery/applications/1493675846773379142" target="_blank">Discord Page</a>
-            <a href="#faq">FAQ</a>
-            <a href="contact.html">Contact Us</a>
+        <nav class="pill-nav" id="pillNav">
+            <div class="nav-mobile-header">
+                <span class="mobile-brand">RestoreX</span>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('pillNav').classList.toggle('nav-open')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#features">Features</a>
+                <a href="https://discord.com/discovery/applications/1484501968759160914" target="_blank">Discord Page</a>
+                <a href="#faq">FAQ</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1484501968759160914&response_type=code&redirect_uri=https%3A%2F%2Frestorex.ddns.net%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds"
+                    class="login-btn mobile-login" target="_blank">Login</a>
+            </div>
             <a href="https://discord.com/oauth2/authorize?client_id=1484501968759160914&response_type=code&redirect_uri=https%3A%2F%2Frestorex.ddns.net%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds"
-                class="login-btn" target="_blank">Login</a>
+                class="login-btn desktop-login" target="_blank">Login</a>
         </nav>
     </div>
 
@@ -817,7 +919,7 @@
                     one powerful bot. Secure your Discord server actively.</p>
 
                 <div class="hero-ctas">
-                    <a href="https://discord.com/oauth2/authorize?client_id=1493675846773379142&permissions=8&integration_type=0&scope=bot"
+                    <a href="https://discord.com/oauth2/authorize?client_id=1484501968759160914&scope=bot%20applications.commands&permissions=8"
                         class="btn btn-primary" target="_blank">
                         Invite <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
@@ -979,7 +1081,7 @@
     <section class="support-cta">
         <h2>Join Our Support Server</h2>
         <p>We share important updates regarding features, downtime, bugs or other problems. Stay up to date.</p>
-        <a href="https://discord.gg/r3quZUzVtW" target="_blank" class="btn btn-outline" style="border-width: 2px;">
+        <a href="https://discord.gg/mPRhYxyVQB" target="_blank" class="btn btn-outline" style="border-width: 2px;">
             Join <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -997,7 +1099,7 @@
                 </div>
                 <p>An intelligent and powerful bot built to protect servers from raids, nukes, and malicious activity.
                 </p>
-                <a href="https://discord.com/oauth2/authorize?client_id=1493675846773379142&permissions=8&integration_type=0&scope=bot"
+                <a href="https://discord.com/oauth2/authorize?client_id=1484501968759160914&scope=bot%20applications.commands&permissions=8"
                     target="_blank" class="btn btn-outline"
                     style="border-width: 2px; padding: 0.6rem 1.2rem; font-size: 0.95rem; margin-top: 1rem; width: fit-content; border-color: rgba(255,255,255,0.15); color: white;">
                     <i class="fa-brands fa-discord"></i> Invite RestoreX
@@ -1026,7 +1128,7 @@
         </div>
 
         <div class="footer-bottom">
-            <span>&copy; 2026 RestoreX. Application ID: 1493675846773379142 | Bot Developer: @.lepem</span>
+            <span>&copy; 2026 RestoreX. Application ID: 1484501968759160914 | Bot Developer: @lepem</span>
             <a href="https://f9xr.github.io/" target="_blank">MADE BY F9XR TEAM</a>
         </div>
     </footer>
