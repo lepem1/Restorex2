@@ -198,7 +198,7 @@ document.getElementById("loginForm").onsubmit = async (e) => {
         localStorage.setItem("token", data.token);
 
         setTimeout(() => {
-            window.location.href = "/dashboard.html";
+            window.location.href = "/RestoreX/dashboard.html";
         }, 800);
 
     } catch (err) {
@@ -214,7 +214,7 @@ if (token) {
         headers: { "Authorization": "Bearer " + token }
     }).then(res => {
         if (res.status === 200) {
-            window.location.href = "/dashboard.html";
+            window.location.href = "/RestoreX/dashboard.html";
         }
     });
 }
