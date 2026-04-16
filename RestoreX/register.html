@@ -8,16 +8,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --bg-light: #f1f5f4;
+    --bg-dark: #0b1120;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --accent: #3b82f6;
+}
+
+/* Base */
 body {
     margin: 0;
     font-family: 'Manrope', sans-serif;
-    background: #f1f5f4;
+    background: var(--bg-light);
+}
+
+/* Navbar (same style as index) */
+.navbar {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.nav-inner {
+    background: var(--bg-dark);
+    border-radius: 999px;
+    padding: 8px 16px;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-inner a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+}
+
+.nav-inner a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.login-btn {
+    background: var(--accent);
+}
+
+/* Center section */
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 80px);
 }
 
+/* Card */
 .container {
     background: white;
     padding: 40px;
@@ -29,44 +74,43 @@ body {
 
 h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: 28px;
     margin-bottom: 10px;
 }
 
 p {
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 14px;
     margin-bottom: 25px;
 }
 
+/* Inputs */
 input {
     width: 100%;
     padding: 14px;
     margin-bottom: 15px;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
-    font-size: 14px;
 }
 
+/* Button */
 button {
     width: 100%;
     padding: 14px;
     border-radius: 999px;
     border: none;
-    background: #3b82f6;
+    background: var(--accent);
     color: white;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 button:hover {
     background: #2563eb;
-    transform: translateY(-2px);
 }
 
+/* Links */
 a {
-    color: #3b82f6;
+    color: var(--accent);
     text-decoration: none;
     font-weight: 600;
 }
@@ -80,23 +124,35 @@ a {
 
 <body>
 
-<div class="container">
-    <h1>Create Account</h1>
-    <p>Join RestoreX security platform</p>
+<!-- Navbar -->
+<div class="navbar">
+    <div class="nav-inner">
+        <a href="/">Home</a>
+        <a href="/login.html">Login</a>
+        <a href="/register.html" class="login-btn">Register</a>
+    </div>
+</div>
 
-    <form id="registerForm">
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
+<!-- Register Form -->
+<div class="wrapper">
+    <div class="container">
+        <h1>Create Account</h1>
+        <p>Join RestoreX security platform</p>
 
-        <button type="submit">Register</button>
-    </form>
+        <form id="registerForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
 
-    <p>
-        Already have an account?
-        <a href="login.html">Login</a>
-    </p>
+            <button type="submit">Register</button>
+        </form>
 
-    <div class="msg" id="msg"></div>
+        <p>
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+
+        <div class="msg" id="msg"></div>
+    </div>
 </div>
 
 <script>
