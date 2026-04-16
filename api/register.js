@@ -2,6 +2,7 @@ import clientPromise from "../lib/mongodb";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
+  // Only POST allowed
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
@@ -9,31 +10,40 @@ export default async function handler(req, res) {
   try {
     const { email, password } = req.body || {};
 
-    // Validate input
+    // 🚫 Check empty
     if (!email || !password) {
-      return res.status(400).json({ message: "Missing email or password" });
+      return res.status(400).json({ message: "Please fill all fields" });
     }
 
+    // 🚫 Password length check
+    if (password.length < 6) {
+      return res.status(400).json({
+        message: "Password must be at least 6 characters"
+      });
+    }
+
+    // 🔌 Connect MongoDB
     const client = await clientPromise;
     const db = client.db("restorex");
 
-    // Check existing user
+    // 🔍 Check if user already exists
     const existing = await db.collection("users").findOne({ email });
 
     if (existing) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash password
-    const hashed = await bcrypt.hash(password, 10);
+    // 🔐 Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user
+    // 💾 Save user
     await db.collection("users").insertOne({
-      email,
-      password: hashed,
+      email: email,
+      password: hashedPassword,
       createdAt: new Date()
     });
 
+    // ✅ Success
     return res.status(200).json({
       message: "Registered successfully"
     });
@@ -41,8 +51,9 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error("REGISTER ERROR:", err);
 
+    // 🔥 Always return JSON (fixes frontend crash)
     return res.status(500).json({
-      message: "Register failed",
+      message: "Server error",
       error: err.message
     });
   }
