@@ -8,10 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --bg-light: #f1f5f4;
+    --bg-dark: #0b1120;
+    --text-muted: #64748b;
+    --accent: #3b82f6;
+}
+
 body {
     margin: 0;
     font-family: 'Manrope', sans-serif;
-    background: #f1f5f4;
+    background: var(--bg-light);
 }
 
 /* Navbar */
@@ -22,7 +29,7 @@ body {
 }
 
 .nav-inner {
-    background: #0b1120;
+    background: var(--bg-dark);
     border-radius: 999px;
     padding: 8px 16px;
     display: flex;
@@ -36,17 +43,26 @@ body {
     border-radius: 999px;
 }
 
-.logout {
+.nav-inner a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.logout-btn {
     background: #ef4444;
 }
 
 /* Content */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
 .container {
-    max-width: 900px;
-    margin: 50px auto;
     background: white;
     padding: 40px;
     border-radius: 24px;
+    width: 500px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
@@ -65,56 +81,69 @@ h1 {
 
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <div class="nav-inner">
         <a href="/">Home</a>
-        <a href="#" onclick="logout()" class="logout">Logout</a>
+        <a href="#" onclick="logout()" class="logout-btn">Logout</a>
     </div>
 </div>
 
-<div class="container">
-    <h1>Dashboard</h1>
-    <p>Welcome to RestoreX panel</p>
+<!-- Dashboard -->
+<div class="wrapper">
+    <div class="container">
+        <h1>Dashboard</h1>
+        <p>Welcome to RestoreX</p>
 
-    <div class="card">
-        <h3>User Info</h3>
-        <p id="userEmail">Loading...</p>
+        <div class="card">
+            <h3>User Info</h3>
+            <p id="userEmail">Loading...</p>
+        </div>
     </div>
 </div>
 
 <script>
-// 🔐 Check login
+//  Protect page
 async function checkAuth() {
     const token = localStorage.getItem("token");
 
+    //  No token
     if (!token) {
-        window.location.href = "/login.html";
+        window.location.href = "/RestoreX/login.html";
         return;
     }
 
-    const res = await fetch("/api/me", {
-        headers: {
-            "Authorization": "Bearer " + token
+    try {
+        const res = await fetch("/api/me", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        //  Invalid token
+        if (res.status !== 200) {
+            localStorage.removeItem("token");
+            window.location.href = "/RestoreX/login.html";
+            return;
         }
-    });
 
-    if (res.status !== 200) {
-        localStorage.removeItem("token");
-        window.location.href = "/login.html";
-        return;
+        //  Valid user
+        const data = await res.json();
+        document.getElementById("userEmail").innerText =
+            "Email: " + data.user.email;
+
+    } catch {
+        window.location.href = "/RestoreX/login.html";
     }
+}
 
-    const data = await res.json();
-    document.getElementById("userEmail").innerText = "Email: " + data.user.email;
+//  Logout
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "/RestoreX/login.html";
 }
 
 checkAuth();
-
-// 🚪 Logout
-function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "/login.html";
-}
 </script>
 
 </body>
