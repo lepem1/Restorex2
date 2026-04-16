@@ -2,46 +2,38 @@ import clientPromise from "../lib/mongodb";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
-  try {
-    // ✅ Only POST allowed
-    if (req.method !== "POST") {
-      return res.status(405).json({ message: "Method not allowed" });
-    }
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
-    // ✅ Safe body parsing
+  try {
     const { email, password } = req.body || {};
 
-    // 🚫 Validate input
+    // Validate input
     if (!email || !password) {
-      return res.status(400).json({ message: "Please fill all fields" });
+      return res.status(400).json({ message: "Missing email or password" });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
-    }
-
-    // 🔌 Connect to MongoDB
     const client = await clientPromise;
     const db = client.db("restorex");
 
-    // 🔍 Check if user exists
-    const existingUser = await db.collection("users").findOne({ email });
+    // Check existing user
+    const existing = await db.collection("users").findOne({ email });
 
-    if (existingUser) {
+    if (existing) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // 🔐 Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password
+    const hashed = await bcrypt.hash(password, 10);
 
-    // 💾 Save user
+    // Insert user
     await db.collection("users").insertOne({
       email,
-      password: hashedPassword,
+      password: hashed,
       createdAt: new Date()
     });
 
-    // ✅ Success
     return res.status(200).json({
       message: "Registered successfully"
     });
@@ -49,9 +41,8 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error("REGISTER ERROR:", err);
 
-    // 🔥 ALWAYS return JSON (prevents your frontend crash)
     return res.status(500).json({
-      message: "Server error",
+      message: "Register failed",
       error: err.message
     });
   }
