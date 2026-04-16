@@ -2,6 +2,7 @@ import clientPromise from "../lib/mongodb";
 import bcrypt from "bcrypt";
 
 export default async function handler(req, res) {
+  // Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
@@ -9,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const { email, password } = req.body || {};
 
-    // 🚫 Missing fields
+    // 🚫 Check empty fields
     if (!email || !password) {
       return res.status(400).json({ message: "Please fill all fields" });
     }
@@ -17,24 +18,24 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("restorex");
 
-    // 🔍 Check existing user
-    const existing = await db.collection("users").findOne({ email });
+    // 🔍 Check if user exists
+    const existingUser = await db.collection("users").findOne({ email });
 
-    if (existing) {
+    if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
     // 🔐 Hash password
-    const hashed = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 💾 Save user
+    // 💾 Insert user
     await db.collection("users").insertOne({
-      email,
-      password: hashed,
+      email: email,
+      password: hashedPassword,
       createdAt: new Date()
     });
 
-    // ✅ SUCCESS (IMPORTANT → JSON)
+    // ✅ Success
     return res.status(200).json({
       message: "Registered successfully"
     });
@@ -42,7 +43,6 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error("REGISTER ERROR:", err);
 
-    // ✅ ALWAYS RETURN JSON
     return res.status(500).json({
       message: "Server error",
       error: err.message
