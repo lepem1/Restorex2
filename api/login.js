@@ -3,18 +3,21 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
+  // ❌ Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
   try {
-    const { email, password } = req.body;
+    // ✅ Safe body parsing
+    const { email, password } = req.body || {};
 
-    // 🚫 Check empty
+    // 🚫 Missing fields
     if (!email || !password) {
-      return res.status(400).json({ message: "Missing fields" });
+      return res.status(400).json({ message: "Please fill all fields" });
     }
 
+    // 🔌 Connect MongoDB
     const client = await clientPromise;
     const db = client.db("restorex");
 
@@ -25,11 +28,21 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "User not found" });
     }
 
+    // ⚠️ Safety check
+    if (!user.password) {
+      return res.status(500).json({ message: "User data corrupted" });
+    }
+
     // 🔐 Compare password
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       return res.status(400).json({ message: "Wrong password" });
+    }
+
+    // 🔑 Check JWT secret
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ message: "JWT not configured" });
     }
 
     // 🎟️ Create token
@@ -46,7 +59,11 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Server error" });
+    console.error("LOGIN ERROR:", err);
+
+    return res.status(500).json({
+      message: "Server error",
+      error: err.message
+    });
   }
 }
