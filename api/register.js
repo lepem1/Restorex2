@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import clientPromise from "../lib/mongodb.js";
 
 export default async function handler(req, res) {
-  // 🚫 Only POST allowed
+  // 🚫 Only POST
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // 🔌 Connect MongoDB
+    // 🔌 MongoDB
     let client;
     try {
       client = await clientPromise;
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(cleanPassword, 10);
 
-    // 🔑 Generate verification token
+    // 🔑 Token
     const token = crypto.randomBytes(32).toString("hex");
     const tokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
@@ -74,23 +74,23 @@ export default async function handler(req, res) {
       createdAt: new Date()
     });
 
-    // 🌍 Create verification link
+    // 🌍 Verification link
     const baseUrl = process.env.BASE_URL || "http://localhost:3000";
     const verifyLink = `${baseUrl}/api/verify?token=${token}`;
 
-    // 📧 Send email (safe)
+    // 📧 Send email
     if (process.env.RESEND_API_KEY) {
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
 
-        const { error } = await resend.emails.send({
+        const { data, error } = await resend.emails.send({
           from: "RestoreX <onboarding@resend.dev>",
           to: [cleanEmail],
           subject: "Verify your RestoreX account",
           html: `
             <div style="font-family:sans-serif">
               <h2>🔐 Verify your account</h2>
-              <p>Click the button below:</p>
+              <p>Click below to verify:</p>
 
               <a href="${verifyLink}"
                 style="display:inline-block;padding:12px 20px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;">
@@ -98,22 +98,21 @@ export default async function handler(req, res) {
               </a>
 
               <p style="font-size:12px;color:gray;margin-top:10px;">
-                This link expires in 15 minutes.
+                Link expires in 15 minutes.
               </p>
             </div>
           `
         });
 
-        if (error) {
-          console.error("❌ Resend error:", error);
-        }
+        // 🔍 Debug logs (IMPORTANT)
+        console.log("📧 EMAIL RESPONSE:", data);
+        if (error) console.error("❌ EMAIL ERROR:", error);
 
       } catch (emailErr) {
-        console.error("❌ Email send failed:", emailErr);
-        // ⚠️ do NOT break register
+        console.error("❌ Email failed:", emailErr);
       }
     } else {
-      console.warn("⚠️ RESEND_API_KEY missing (email not sent)");
+      console.warn("⚠️ RESEND_API_KEY missing");
     }
 
     // ✅ Success
