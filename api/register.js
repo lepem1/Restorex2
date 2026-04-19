@@ -4,27 +4,18 @@ import crypto from "crypto";
 import { Resend } from "resend";
 
 export default async function handler(req, res) {
-  // 🚫 Only POST
   if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      message: "Method not allowed"
-    });
+    return res.status(405).json({ success: false, message: "Method not allowed" });
   }
 
   try {
     const { email, password } = req.body || {};
 
-    // 🔍 Clean input
     const cleanEmail = String(email || "").trim().toLowerCase();
     const cleanPassword = String(password || "").trim();
 
-    // 🚫 Validation
     if (!cleanEmail || !cleanPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "Please fill all fields"
-      });
+      return res.status(400).json({ success: false, message: "Please fill all fields" });
     }
 
     if (cleanPassword.length < 6) {
@@ -34,38 +25,19 @@ export default async function handler(req, res) {
       });
     }
 
-    // 🔌 DB CONNECT (safe)
-    let client;
-    try {
-      client = await clientPromise;
-    } catch (dbErr) {
-      console.error("DB CONNECTION ERROR:", dbErr);
-      return res.status(500).json({
-        success: false,
-        message: "Database connection failed"
-      });
-    }
-
+    const client = await clientPromise;
     const db = client.db("restorex");
 
-    // 🔍 Check existing
     const existing = await db.collection("users").findOne({ email: cleanEmail });
-
     if (existing) {
-      return res.status(400).json({
-        success: false,
-        message: "User already exists"
-      });
+      return res.status(400).json({ success: false, message: "User already exists" });
     }
 
-    // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(cleanPassword, 10);
 
-    // 🔑 Generate token
     const token = crypto.randomBytes(32).toString("hex");
     const tokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
-    // 💾 Save user FIRST
     await db.collection("users").insertOne({
       email: cleanEmail,
       password: hashedPassword,
@@ -75,52 +47,55 @@ export default async function handler(req, res) {
       createdAt: new Date()
     });
 
-    // 🌍 Safe base URL
     const baseUrl = process.env.BASE_URL || "http://localhost:3000";
     const verifyLink = `${baseUrl}/api/verify?token=${token}`;
 
-    // 📧 Email sending (SAFE)
+    // 📧 Send email
     if (process.env.RESEND_API_KEY) {
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
 
-        await resend.emails.send({
+        const { data, error } = await resend.emails.send({
           from: "RestoreX <onboarding@resend.dev>",
-          to: cleanEmail,
+          to: [cleanEmail], // ⚠️ MUST be array
           subject: "Verify your RestoreX account",
           html: `
             <div style="font-family:sans-serif">
               <h2>🔐 Verify your account</h2>
-              <p>Click the button below:</p>
+              <p>Click below:</p>
 
               <a href="${verifyLink}"
-                style="display:inline-block;padding:12px 20px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;">
+                style="padding:12px 20px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;">
                 Verify Account
               </a>
 
               <p style="font-size:12px;color:gray;margin-top:10px;">
-                This link expires in 15 minutes.
+                Link expires in 15 minutes.
               </p>
             </div>
           `
         });
 
+        if (error) {
+          console.error("RESEND ERROR:", error);
+        } else {
+          console.log("EMAIL SENT:", data);
+        }
+
       } catch (emailErr) {
-        console.error("EMAIL ERROR:", emailErr);
-        // ⚠️ do NOT break register
+        console.error("EMAIL CRASH:", emailErr);
       }
     } else {
-      console.warn("⚠️ RESEND_API_KEY missing — email skipped");
+      console.warn("⚠️ RESEND_API_KEY missing");
     }
 
-    // ✅ SUCCESS
     return res.status(200).json({
       success: true,
       message: "Registered! Check your email to verify"
     });
 
   } catch (err) {
-    console.error("REGISTER ERROR FULL:", err);
+    console.error("REGISTER ERROR:", err);
 
     return res.status(500).json({
       success: false,
