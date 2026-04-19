@@ -3,50 +3,71 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export default async function handler(req, res) {
-  // ✅ Allow only POST
+  // 🚫 Only POST
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+    return res.status(405).json({
+      success: false,
+      message: "Method not allowed"
+    });
   }
 
   try {
     const { email, password } = req.body || {};
 
-    // 🔍 Validation
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: "Please fill all fields" });
+    // 🔍 Clean input
+    const cleanEmail = String(email || "").trim().toLowerCase();
+    const cleanPassword = String(password || "").trim();
+
+    // 🚫 Validation
+    if (!cleanEmail || !cleanPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all fields"
+      });
     }
 
-    if (password.length < 6) {
+    if (cleanPassword.length < 6) {
       return res.status(400).json({
         success: false,
         message: "Password must be at least 6 characters"
       });
     }
 
-    // 🔌 DB
-    const client = await clientPromise;
+    // 🔌 DB CONNECT (safe)
+    let client;
+    try {
+      client = await clientPromise;
+    } catch (dbErr) {
+      console.error("DB CONNECTION ERROR:", dbErr);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed"
+      });
+    }
+
     const db = client.db("restorex");
 
     // 🔍 Check existing
-    const existing = await db.collection("users").findOne({ email });
+    const existing = await db.collection("users").findOne({ email: cleanEmail });
+
     if (existing) {
-      return res.status(400).json({ success: false, message: "User already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "User already exists"
+      });
     }
 
     // 🔐 Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(cleanPassword, 10);
 
-    // 🔑 Token
+    // 🔑 Generate token
     const token = crypto.randomBytes(32).toString("hex");
-
     const tokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
-    // 💾 Save user FIRST (important)
+    // 💾 Save user FIRST
     await db.collection("users").insertOne({
-      email,
+      email: cleanEmail,
       password: hashedPassword,
       verified: false,
       verificationToken: token,
@@ -54,22 +75,23 @@ export default async function handler(req, res) {
       createdAt: new Date()
     });
 
-    // 🌍 Safe BASE_URL fallback
+    // 🌍 Safe base URL
     const baseUrl = process.env.BASE_URL || "http://localhost:3000";
-
     const verifyLink = `${baseUrl}/api/verify?token=${token}`;
 
-    // 📧 Send email (SAFE — won't crash API)
+    // 📧 Email sending (SAFE)
     if (process.env.RESEND_API_KEY) {
       try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
         await resend.emails.send({
           from: "RestoreX <onboarding@resend.dev>",
-          to: email,
+          to: cleanEmail,
           subject: "Verify your RestoreX account",
           html: `
             <div style="font-family:sans-serif">
               <h2>🔐 Verify your account</h2>
-              <p>Click below:</p>
+              <p>Click the button below:</p>
 
               <a href="${verifyLink}"
                 style="display:inline-block;padding:12px 20px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;">
@@ -77,20 +99,21 @@ export default async function handler(req, res) {
               </a>
 
               <p style="font-size:12px;color:gray;margin-top:10px;">
-                Link expires in 15 minutes.
+                This link expires in 15 minutes.
               </p>
             </div>
           `
         });
+
       } catch (emailErr) {
         console.error("EMAIL ERROR:", emailErr);
-        // ⚠️ DO NOT crash register if email fails
+        // ⚠️ do NOT break register
       }
     } else {
-      console.warn("⚠️ RESEND_API_KEY missing — email not sent");
+      console.warn("⚠️ RESEND_API_KEY missing — email skipped");
     }
 
-    // ✅ Always return JSON
+    // ✅ SUCCESS
     return res.status(200).json({
       success: true,
       message: "Registered! Check your email to verify"
@@ -99,7 +122,6 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error("REGISTER ERROR FULL:", err);
 
-    // ✅ Always JSON (prevents frontend crash)
     return res.status(500).json({
       success: false,
       message: "Server error",
