@@ -9,16 +9,19 @@
 
 <style>
 :root {
-    --bg-light: #f1f5f4;
-    --bg-dark: #0b1120;
-    --text-muted: #64748b;
+    --bg: #f1f5f4;
+    --dark: #0b1120;
+    --card: #ffffff;
     --accent: #3b82f6;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --muted: #64748b;
 }
 
 body {
     margin: 0;
     font-family: 'Manrope', sans-serif;
-    background: var(--bg-light);
+    background: var(--bg);
 }
 
 /* Navbar */
@@ -29,7 +32,7 @@ body {
 }
 
 .nav-inner {
-    background: var(--bg-dark);
+    background: var(--dark);
     border-radius: 999px;
     padding: 8px 16px;
     display: flex;
@@ -43,45 +46,81 @@ body {
     border-radius: 999px;
 }
 
-.nav-inner a:hover {
-    background: rgba(255,255,255,0.1);
-}
-
 .logout-btn {
-    background: #ef4444;
+    background: var(--danger);
 }
 
-/* Content */
+/* Layout */
 .wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.container {
-    background: white;
-    padding: 40px;
-    border-radius: 24px;
-    width: 500px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
 }
 
 h1 {
     font-family: 'Outfit', sans-serif;
 }
 
+/* Cards */
 .card {
-    background: #f8fafc;
+    background: var(--card);
     padding: 20px;
     border-radius: 16px;
     margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Premium Badge */
+.premium {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.not-premium {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Buttons */
+button {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 999px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+.secondary {
+    background: #e2e8f0;
+    color: black;
+}
+
+/* Settings toggle */
+.toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Navbar -->
 <div class="navbar">
     <div class="nav-inner">
         <a href="/">Home</a>
@@ -89,25 +128,57 @@ h1 {
     </div>
 </div>
 
-<!-- Dashboard -->
 <div class="wrapper">
-    <div class="container">
-        <h1>Dashboard</h1>
-        <p>Welcome to RestoreX</p>
+    <h1>Dashboard</h1>
 
-        <div class="card">
-            <h3>User Info</h3>
-            <p id="userEmail">Loading...</p>
-        </div>
+    <!-- USER -->
+    <div class="card">
+        <h3>User Info</h3>
+        <p id="userEmail">Loading...</p>
+        <p id="discordUser">Discord: Not set</p>
     </div>
+
+    <!-- PREMIUM -->
+    <div class="card">
+        <h3>Premium Status</h3>
+        <p id="premiumStatus" class="not-premium">Not Premium</p>
+    </div>
+
+    <!-- REDEEM -->
+    <div class="card">
+        <h3>Redeem Code</h3>
+        <input id="redeemCode" placeholder="Enter code">
+        <button onclick="redeem()">Redeem</button>
+        <p id="redeemMsg"></p>
+    </div>
+
+    <!-- DISCORD LINK -->
+    <div class="card">
+        <h3>Link Discord</h3>
+        <input id="discordInput" placeholder="Discord Username">
+        <button onclick="saveDiscord()">Save</button>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="card">
+        <h3>Settings</h3>
+
+        <div class="toggle">
+            <span>Show Email</span>
+            <input type="checkbox" id="showEmailToggle">
+        </div>
+
+        <button class="secondary" onclick="saveSettings()">Save Settings</button>
+    </div>
+
 </div>
 
 <script>
-//  Protect page
+let userData = null;
+
 async function checkAuth() {
     const token = localStorage.getItem("token");
 
-    //  No token
     if (!token) {
         window.location.href = "/RestoreX/login.html";
         return;
@@ -115,29 +186,83 @@ async function checkAuth() {
 
     try {
         const res = await fetch("/api/me", {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
+            headers: { Authorization: "Bearer " + token }
         });
 
-        //  Invalid token
         if (res.status !== 200) {
             localStorage.removeItem("token");
             window.location.href = "/RestoreX/login.html";
             return;
         }
 
-        //  Valid user
         const data = await res.json();
+        userData = data.user;
+
         document.getElementById("userEmail").innerText =
-            "Email: " + data.user.email;
+            userData.showEmail === false ? "Email hidden" : "Email: " + userData.email;
+
+        document.getElementById("discordUser").innerText =
+            "Discord: " + (userData.discord || "Not set");
+
+        document.getElementById("premiumStatus").innerText =
+            userData.premium ? "Premium Active" : "Not Premium";
+
+        document.getElementById("premiumStatus").className =
+            userData.premium ? "premium" : "not-premium";
+
+        document.getElementById("showEmailToggle").checked =
+            userData.showEmail !== false;
 
     } catch {
         window.location.href = "/RestoreX/login.html";
     }
 }
 
-//  Logout
+/* Redeem */
+async function redeem() {
+    const code = document.getElementById("redeemCode").value;
+
+    const res = await fetch("/api/redeem", {
+        method: "POST",
+        headers: { "Content-Type": "application/json",
+                   "Authorization": "Bearer " + localStorage.getItem("token") },
+        body: JSON.stringify({ code })
+    });
+
+    const data = await res.json();
+    document.getElementById("redeemMsg").innerText = data.message;
+
+    checkAuth();
+}
+
+/* Save Discord */
+async function saveDiscord() {
+    const discord = document.getElementById("discordInput").value;
+
+    await fetch("/api/user/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json",
+                   "Authorization": "Bearer " + localStorage.getItem("token") },
+        body: JSON.stringify({ discord })
+    });
+
+    checkAuth();
+}
+
+/* Settings */
+async function saveSettings() {
+    const showEmail = document.getElementById("showEmailToggle").checked;
+
+    await fetch("/api/user/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json",
+                   "Authorization": "Bearer " + localStorage.getItem("token") },
+        body: JSON.stringify({ showEmail })
+    });
+
+    checkAuth();
+}
+
 function logout() {
     localStorage.removeItem("token");
     window.location.href = "/RestoreX/login.html";
