@@ -2,7 +2,7 @@
   "name": "restorex",
   "version": "1.0.0",
   "description": "RestoreX Dashboard Auth System",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vercel dev",
     "build": "echo build complete"
@@ -10,6 +10,7 @@
   "dependencies": {
     "mongodb": "^6.6.0",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "resend": "^3.2.0"
   }
 }
