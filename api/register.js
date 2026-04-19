@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     // 🔌 IMPORT DB SAFELY (IMPORTANT)
     let clientPromise;
     try {
-      clientPromise = (await import("../lib/mongodb")).default;
+      clientPromise = (await import("../lib/mongodb.js")).default;
     } catch (err) {
       console.error("❌ Mongo import failed:", err);
       return res.status(500).json({
