@@ -1174,6 +1174,26 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
+   
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.querySelector(".desktop-login");
+    const mobileLoginBtn = document.querySelector(".mobile-login");
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        if (loginBtn) {
+            loginBtn.innerText = "Dashboard";
+            loginBtn.href = "/RestoreX/dashboard.html";
+        }
+
+        if (mobileLoginBtn) {
+            mobileLoginBtn.innerText = "Dashboard";
+            mobileLoginBtn.href = "/RestoreX/dashboard.html";
+        }
+    }
+});
+        
     </script>
 </body>
 
