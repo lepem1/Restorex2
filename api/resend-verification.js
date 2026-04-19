@@ -77,7 +77,7 @@ export default async function handler(req, res) {
 
         const { data, error } = await resend.emails.send({
           from: "RestoreX <onboarding@resend.dev>",
-          to: [cleanEmail],
+         to: ["restorex.system@outlook.com"],
           subject: "Verify your RestoreX account",
           html: `
             <div style="font-family:sans-serif">
