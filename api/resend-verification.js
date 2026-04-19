@@ -1,4 +1,4 @@
-import clientPromise from "../lib/mongodb";
+import clientPromise from "../lib/mongodb.js";
 import crypto from "crypto";
 import { Resend } from "resend";
 
