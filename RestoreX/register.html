@@ -11,12 +11,12 @@
 :root {
     --bg-light: #f1f5f4;
     --bg-dark: #0b1120;
-    --text-dark: #0f172a;
     --text-muted: #64748b;
     --accent: #3b82f6;
+    --error: #ef4444;
+    --success: #22c55e;
 }
 
-/* Base */
 body {
     margin: 0;
     font-family: 'Manrope', sans-serif;
@@ -54,7 +54,7 @@ body {
     background: var(--accent);
 }
 
-/* Center */
+/* Layout */
 .wrapper {
     display: flex;
     justify-content: center;
@@ -72,7 +72,6 @@ body {
     text-align: center;
 }
 
-/* Verify UI animation */
 .fade {
     animation: fadeIn 0.4s ease;
 }
@@ -84,19 +83,17 @@ body {
 
 h1 {
     font-family: 'Outfit', sans-serif;
-    margin-bottom: 10px;
 }
 
 p {
     color: var(--text-muted);
     font-size: 14px;
-    margin-bottom: 20px;
 }
 
 input {
     width: 100%;
     padding: 14px;
-    margin-bottom: 15px;
+    margin-top: 10px;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
 }
@@ -104,6 +101,7 @@ input {
 button {
     width: 100%;
     padding: 14px;
+    margin-top: 15px;
     border-radius: 999px;
     border: none;
     background: var(--accent);
@@ -119,17 +117,15 @@ button:hover {
 .secondary-btn {
     background: #e2e8f0;
     color: #0f172a;
-    margin-top: 10px;
-}
-
-.secondary-btn:hover {
-    background: #cbd5f5;
 }
 
 .msg {
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 14px;
 }
+
+.error { color: var(--error); }
+.success { color: var(--success); }
 </style>
 </head>
 
@@ -145,91 +141,138 @@ button:hover {
 
 <div class="wrapper">
 
-    <!-- REGISTER UI -->
-    <div class="container fade" id="registerUI">
-        <h1>Create Account</h1>
-        <p>Join RestoreX security platform</p>
+<!-- REGISTER UI -->
+<div class="container fade" id="registerUI">
+    <h1>Create Account</h1>
+    <p>Join RestoreX security platform</p>
 
-        <form id="registerForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit">Register</button>
-        </form>
+    <form id="registerForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
 
-        <p>
-            Already have an account?
-            <a href="login.html">Login</a>
-        </p>
+    <p>Already have an account? <a href="/RestoreX/login.html">Login</a></p>
 
-        <div class="msg" id="msg"></div>
-    </div>
+    <div class="msg" id="msg"></div>
+</div>
 
-    <!-- VERIFY UI -->
-    <div class="container fade" id="verifyUI" style="display:none;">
-        <h1>📧 Check your email</h1>
+<!-- VERIFY UI -->
+<div class="container fade" id="verifyUI" style="display:none;">
+    <h1>📧 Check your email</h1>
 
-        <p>
-            A verification link has been sent to:<br>
-            <b id="userEmail"></b>
-        </p>
+    <p>
+        A verification link has been sent to:<br>
+        <b id="userEmail"></b>
+    </p>
 
-        <p>Please verify your account before logging in.</p>
+    <p>Please verify your account before logging in.</p>
 
-        <p style="font-size:12px;color:gray;">
-            Didn’t receive it? Check your spam folder.
-        </p>
+    <p style="font-size:12px;color:gray;">
+        Didn’t receive it? Check spam folder.
+    </p>
 
-        <button onclick="resendEmail()">Resend Email</button>
-        <button class="secondary-btn" onclick="goLogin()">Go to Login</button>
+    <button onclick="resendEmail()">Resend Email</button>
+    <button class="secondary-btn" onclick="goLogin()">Go to Login</button>
 
-        <div class="msg" id="resendMsg"></div>
-    </div>
+    <div class="msg" id="resendMsg"></div>
+</div>
 
 </div>
 
 <script>
+const BASE_URL = window.location.origin;
+
 const form = document.getElementById("registerForm");
+const msg = document.getElementById("msg");
+
 const registerUI = document.getElementById("registerUI");
 const verifyUI = document.getElementById("verifyUI");
 
 form.onsubmit = async (e) => {
     e.preventDefault();
 
-    const userEmail = email.value;
+    const emailVal = email.value.trim();
+    const passVal = password.value.trim();
 
-    const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-            email: userEmail,
-            password: password.value
-        })
-    });
+    if (!emailVal || !passVal) {
+        msg.innerText = "Please fill all fields";
+        msg.className = "msg error";
+        return;
+    }
 
-    const data = await res.json();
-    msg.innerText = data.message;
+    try {
+        const res = await fetch(`${BASE_URL}/api/register`, {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({
+                email: emailVal,
+                password: passVal
+            })
+        });
 
-    if (data.success) {
+        let data;
+        try {
+            data = await res.json();
+        } catch {
+            data = { message: "Server error" };
+        }
+
+        if (!res.ok) {
+            msg.innerText = data.message || "Error occurred";
+            msg.className = "msg error";
+            return;
+        }
+
+        msg.innerText = data.message;
+        msg.className = "msg success";
+
         registerUI.style.display = "none";
         verifyUI.style.display = "block";
-        document.getElementById("userEmail").innerText = userEmail;
+        document.getElementById("userEmail").innerText = emailVal;
+
+    } catch {
+        msg.innerText = "Server offline";
+        msg.className = "msg error";
     }
 };
 
+// 🔁 Resend
 async function resendEmail() {
-    const email = document.getElementById("userEmail").innerText;
+    const emailVal = document.getElementById("userEmail").innerText;
+    const resendMsg = document.getElementById("resendMsg");
 
-    const res = await fetch("/api/resend-verification", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ email })
-    });
+    try {
+        const res = await fetch(`${BASE_URL}/api/resend-verification`, {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ email: emailVal })
+        });
 
-    document.getElementById("resendMsg").innerText = "Email sent again!";
+        let data;
+        try {
+            data = await res.json();
+        } catch {
+            data = {};
+        }
+
+        if (!res.ok) {
+            resendMsg.innerText = data.message || "Failed";
+            resendMsg.className = "msg error";
+            return;
+        }
+
+        resendMsg.innerText = "Email sent again!";
+        resendMsg.className = "msg success";
+
+    } catch {
+        resendMsg.innerText = "Server error";
+        resendMsg.className = "msg error";
+    }
 }
 
 function goLogin() {
-    window.location.href = "login.html";
+    window.location.href = "/RestoreX/login.html";
 }
 </script>
 
