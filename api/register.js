@@ -1,6 +1,9 @@
 import clientPromise from "../lib/mongodb";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -10,7 +13,7 @@ export default async function handler(req, res) {
   try {
     const { email, password } = req.body || {};
 
-    // Validation
+    // 🚫 Validation
     if (!email || !password) {
       return res.status(400).json({ message: "Please fill all fields" });
     }
@@ -24,22 +27,22 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("restorex");
 
-    // Check existing user
+    // 🔍 Check existing
     const existing = await db.collection("users").findOne({ email });
     if (existing) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    //  Hash password
+    // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate verification token
+    // 🔑 Token
     const token = crypto.randomBytes(32).toString("hex");
 
-    //  Expiry (15 min)
+    // ⏱ Expiry
     const tokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
-    //  Save user
+    // 💾 Save user
     await db.collection("users").insertOne({
       email,
       password: hashedPassword,
@@ -49,35 +52,33 @@ export default async function handler(req, res) {
       createdAt: new Date()
     });
 
-    //  Create verification link
-    const verifyLink = `https://restorex.ddns.net/api/verify?token=${token}`;
+    // 🔗 Use BASE_URL (IMPORTANT)
+    const verifyLink = `${process.env.BASE_URL}/api/verify?token=${token}`;
 
-    //  Send email using send.com
-    await fetch("https://api.send.com/v1/email", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.SEND_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        to: email,
-        subject: "Verify your RestoreX account",
-        html: `
+    // 📧 Send email via Resend
+    await resend.emails.send({
+      from: "RestoreX <onboarding@resend.dev>", // works without domain
+      to: email,
+      subject: "Verify your RestoreX account",
+      html: `
+        <div style="font-family:sans-serif">
           <h2>🔐 Verify your account</h2>
-          <p>Click the button below to verify your account:</p>
+
+          <p>Click below to verify:</p>
 
           <a href="${verifyLink}"
             style="display:inline-block;padding:12px 20px;background:#3b82f6;color:white;border-radius:6px;text-decoration:none;">
             Verify Account
           </a>
 
-          <p>This link expires in 15 minutes.</p>
-          <p>If you didn’t request this, ignore this email.</p>
-        `
-      })
+          <p style="margin-top:15px;font-size:12px;color:gray;">
+            This link expires in 15 minutes.<br>
+            If you didn’t request this, ignore this email.
+          </p>
+        </div>
+      `
     });
 
-    //  Response (IMPORTANT: success:true for frontend)
     return res.status(200).json({
       success: true,
       message: "Registered! Check your email to verify"
