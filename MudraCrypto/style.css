@@ -127,13 +127,21 @@ h4 {
 .marquee-container {
     overflow: hidden;
     white-space: nowrap;
-    background: rgba(255, 215, 0, 0.02);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 0.5rem 0;
-    /* Reduced padding */
-    position: relative;
-    /* Removed sticky */
-    z-index: 5;
+    padding: 0.25rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.7));
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.marquee-container .text-gold {
+    color: #ffd700;
 }
 
 .marquee-item {
@@ -154,7 +162,7 @@ h4 {
     content: '';
     position: absolute;
     top: 0;
-    width: 150px;
+    width: 50px;
     height: 100%;
     z-index: 2;
     pointer-events: none;
@@ -200,7 +208,7 @@ h4 {
 /* Responsive Pill Header */
 header {
     position: fixed;
-    top: 1.5rem;
+    top: 2rem;
     /* Reset top */
     left: 50%;
     transform: translateX(-50%);

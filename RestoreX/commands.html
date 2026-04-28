@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands | RestoreX Discord Bot</title>
+    <meta name="title" content="Commands | RestoreX Discord Bot">
+    <meta name="description" content="Complete list of RestoreX bot commands. Moderation, security, utility and more for your Discord server.">
+    <meta name="keywords" content="RestoreX commands, Discord bot commands, RestoreX moderator commands, Discord moderation bot, RestoreX slash commands">
+    <meta name="author" content="RestoreX">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Commands | RestoreX Discord Bot">
+    <meta property="og:description" content="Complete list of RestoreX bot commands for moderation, security, and server management.">
+
+    <link rel="icon" type="image/jpeg" href="bot_logo.jpg">
+    <link rel="canonical" href="https://restorex.ddns.net/commands.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-light: #f1f5f4;
+            --bg-container: #e8ebe9;
+            --bg-dark: #0b1120;
+            --bg-darker: #05080f;
+            --text-dark: #0f172a;
+            --text-light: #f8fafc;
+            --text-muted-dark: #64748b;
+            --text-muted-light: #94a3b8;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --border-light: rgba(0, 0, 0, 0.1);
+            --border-dark: rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            font-size: 110%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Navbar - Same as index.html */
+        .navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            padding-top: 1.5rem;
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pill-nav {
+            background-color: var(--bg-dark);
+            padding: 0.5rem;
+            border-radius: 99px;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .pill-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 99px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .pill-nav a:hover:not(.active) {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .pill-nav a.active {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        main {
+            padding: 8.5rem 5% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+/* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-muted-dark);
+            font-size: 1.15rem;
+            max-width: 480px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-container);
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-wrapper input::placeholder {
+            color: var(--text-muted-dark);
+        }
+
+        .search-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow), 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted-dark);
+        }
+
+        .search-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted-dark);
+        }
+
+        .search-hint kbd {
+            background: var(--bg-container);
+            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 0.15rem 0.5rem;
+            font-family: inherit;
+            font-size: 0.75rem;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-container);
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-tab {
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            background: transparent;
+            color: var(--text-muted-dark);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-tab .count {
+            background: var(--bg-light);
+            padding: 0.1rem 0.45rem;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .category-tab:hover {
+            border-color: var(--accent);
+            color: var(--text-dark);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .category-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .category-tab.active .count {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -1.5px;
+            color: var(--text-dark);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 1.15rem;
+            max-width: 480px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        /* Search Bar - Sleek */
+        .search-wrapper {
+            position: relative;
+            max-width: 520px;
+            margin: 0 auto 1rem;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-container);
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-wrapper input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .search-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow), var(--shadow-lg);
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .search-hint {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            opacity: 0.7;
+        }
+
+        .search-hint kbd {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 0.15rem 0.5rem;
+            font-family: inherit;
+            font-size: 0.75rem;
+        }
+
+        /* Category Tabs - Sleek */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-container);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+        }
+
+        .category-tab {
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .category-tab .count {
+            background: var(--bg-light);
+            padding: 0.1rem 0.45rem;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .category-tab:hover {
+            color: var(--text-dark);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .category-tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+
+        .category-tab.active .count {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+/* Results Info */
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .results-count {
+            color: var(--text-muted-dark);
+            font-size: 0.9rem;
+        }
+
+        .results-count span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 3.5rem;
+            color: var(--text-muted-light);
+            margin-bottom: 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results p {
+            color: var(--text-muted-dark);
+        }
+
+        /* Commands Section - Dark Block */
+        .commands-section {
+            background: var(--bg-dark);
+            border-radius: 40px;
+            padding: 4rem;
+            color: var(--text-light);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-bottom: 3rem;
+        }
+
+        .category-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-dark);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .category-header:hover {
+            opacity: 0.85;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            width: 42px;
+            height: 42px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-title h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .category-title .count {
+            color: var(--text-muted-light);
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .category-toggle {
+            color: var(--text-muted-light);
+            transition: transform 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .category-block.collapsed .category-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .category-block.collapsed .category-commands {
+            display: none;
+        }
+
+        .category-commands {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .command-item {
+            padding: 1.1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .command-item:hover {
+            background: rgba(59,130,246,0.08);
+            border-color: rgba(59,130,246,0.3);
+            transform: translateX(4px);
+        }
+
+        .command-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .command-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            min-width: 180px;
+        }
+
+        .command-name .prefix {
+            color: var(--accent);
+            margin-right: 0.3rem;
+        }
+
+        .command-desc {
+            color: var(--text-muted-light);
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 0.45rem 0.85rem;
+            color: var(--text-muted-light);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted-dark);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        .results-count {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .results-count span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 5rem 2rem;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--text-gray);
+            opacity: 0.3;
+            margin-bottom: 1.5rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .no-results p {
+            color: var(--text-gray);
+        }
+
+        /* Commands Section - Sleek Dark Block */
+        .commands-section {
+            background: var(--bg-dark);
+            border-radius: 32px;
+            padding: 3rem 3.5rem;
+            color: var(--text-light);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            margin-bottom: 3rem;
+        }
+
+        .category-block {
+            margin-bottom: 2rem;
+        }
+
+        .category-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .category-header:hover {
+            opacity: 0.85;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title i {
+            font-size: 1.1rem;
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-title h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .category-title .count {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-top: 0.15rem;
+        }
+
+        .category-toggle {
+            color: var(--text-gray);
+            transition: transform 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .category-block.collapsed .category-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .category-block.collapsed .category-commands {
+            display: none;
+        }
+
+        .results-count {
+            color: var(--text-muted-dark);
+            font-size: 0.95rem;
+        }
+
+        .results-count span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 5rem 2rem;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--text-muted-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .no-results p {
+            color: var(--text-muted-dark);
+            font-size: 1.1rem;
+        }
+
+        /* Custom Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-light), transparent);
+        }
+
+        .divider-line.dark {
+            background: linear-gradient(to right, transparent, var(--border-dark), transparent);
+        }
+
+        .divider-text {
+            color: var(--text-muted-dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Commands Section - Dark Block */
+        .commands-section {
+            background: var(--bg-dark);
+            border-radius: 40px;
+            padding: 4rem;
+            color: var(--text-light);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .category-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-dark);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .category-header:hover {
+            opacity: 0.8;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title i {
+            font-size: 1.25rem;
+            color: var(--accent);
+            width: 44px;
+            height: 44px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-title h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .category-title .count {
+            color: var(--text-muted-light);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .category-toggle {
+            color: var(--text-muted-light);
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .category-block.collapsed .category-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .category-block.collapsed .category-commands {
+            display: none;
+        }
+
+        .category-commands {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .command-item {
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .command-item:hover {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: var(--accent);
+            transform: translateX(6px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .command-info {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            flex: 1;
+        }
+
+        .command-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            min-width: 180px;
+            color: var(--text-light);
+        }
+
+        .command-name .prefix {
+            color: var(--accent);
+            margin-right: 0.3rem;
+        }
+
+        .command-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 0.45rem 0.9rem;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: var(--accent-dark);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pill-nav a {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .category-tabs {
+                padding: 1rem;
+                gap: 0.35rem;
+            }
+
+            .category-tab {
+                padding: 0.5rem 0.85rem;
+                font-size: 0.8rem;
+            }
+
+            .commands-section {
+                padding: 2rem 1.5rem;
+                border-radius: 24px;
+            }
+
+            .command-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .command-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .command-name {
+                min-width: auto;
+            }
+
+            .copy-btn {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar-container">
+        <nav class="pill-nav" id="pillNav">
+            <a href="index.html">Home</a>
+            <a href="commands.html" class="active">Commands</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </div>
+
+    <main>
+        <section class="hero">
+            <h1>Command <span>Reference</span></h1>
+            <p>Complete list of all RestoreX bot commands for moderating and securing your Discord server.</p>
+
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search commands... (/)">
+            </div>
+            <div class="search-hint">Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to search</div>
+        </section>
+
+        <div class="category-tabs">
+            <button class="category-tab active" data-category="all">All Commands <span class="count">40</span></button>
+            <button class="category-tab" data-category="moderation">Moderation <span class="count">10</span></button>
+            <button class="category-tab" data-category="channel">Channel <span class="count">3</span></button>
+            <button class="category-tab" data-category="security">Security <span class="count">7</span></button>
+            <button class="category-tab" data-category="setup">Setup <span class="count">7</span></button>
+            <button class="category-tab" data-category="utility">Utility <span class="count">6</span></button>
+        </div>
+
+        <div class="results-info" id="resultsInfo">
+            <div class="results-count">Showing <span id="resultNum">28</span> commands</div>
+        </div>
+
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No commands found</h3>
+            <p>Try searching with different keywords</p>
+        </div>
+
+        <section class="commands-section" id="commandsSection">
+            <!-- Moderation -->
+            <div class="category-block" data-category="moderation">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-gavel"></i>
+                        <div>
+                            <h2>Moderation</h2>
+                            <span class="count">10 commands</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="warn warning warnuser">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>warn</div>
+                            <div class="command-desc">Warn a user for rule violations</div>
+                        </div>
+                        <button class="copy-btn" data-command="/warn"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="unwarn warning remove">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>unwarn</div>
+                            <div class="command-desc">Remove a specific warning from a user</div>
+                        </div>
+                        <button class="copy-btn" data-command="/unwarn"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="warnings warns view check">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>warns</div>
+                            <div class="command-desc">View all warnings for a user</div>
+                        </div>
+                        <button class="copy-btn" data-command="/warns"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="clearwarns clear warnings delete">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>clearwarns</div>
+                            <div class="command-desc">Clear all warnings for a user</div>
+                        </div>
+                        <button class="copy-btn" data-command="/clearwarns"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="tempwarn temp warning temporary time">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>tempwarn</div>
+                            <div class="command-desc">Issue a temporary warning that expires</div>
+                        </div>
+                        <button class="copy-btn" data-command="/tempwarn"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="mute timeout silent">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>mute</div>
+                            <div class="command-desc">Timeout a user (Discord timeout)</div>
+                        </div>
+                        <button class="copy-btn" data-command="/mute"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="unmute timeout remove">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>unmute</div>
+                            <div class="command-desc">Remove timeout from a user</div>
+                        </div>
+                        <button class="copy-btn" data-command="/unmute"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="ban banned permanent">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>ban</div>
+                            <div class="command-desc">Permanently ban a user from the server</div>
+                        </div>
+                        <button class="copy-btn" data-command="/ban"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="unban banned remove unban">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>unban</div>
+                            <div class="command-desc">Unban a previously banned user</div>
+                        </div>
+                        <button class="copy-btn" data-command="/unban"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="kick removed boot">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>kick</div>
+                            <div class="command-desc">Kick a user from the server</div>
+                        </div>
+                        <button class="copy-btn" data-command="/kick"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel Controls -->
+            <div class="category-block" data-category="channel">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-hashtag"></i>
+                        <div>
+                            <h2>Channel Controls</h2>
+                            <span class="count">3 commands</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="lock channel close">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>lock</div>
+                            <div class="command-desc">Lock the current channel to prevent messages</div>
+                        </div>
+                        <button class="copy-btn" data-command="/lock"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="unlock channel open">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>unlock</div>
+                            <div class="command-desc">Unlock the current channel</div>
+                        </div>
+                        <button class="copy-btn" data-command="/unlock"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="purge delete messages bulk clean">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>purge</div>
+                            <div class="command-desc">Delete messages in bulk from a channel</div>
+                        </div>
+                        <button class="copy-btn" data-command="/purge"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security & Systems -->
+            <div class="category-block" data-category="security">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-shield-halved"></i>
+                        <div>
+                            <h2>Security & Systems</h2>
+                            <span class="count">7 commands</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="antinuke anti nuke protection shield">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>antinuke</div>
+                            <div class="command-desc">Toggle the anti-nuke protection system</div>
+                        </div>
+                        <button class="copy-btn" data-command="/antinuke"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="scan server risks check">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>scan</div>
+                            <div class="command-desc">Scan the server for potential security risks</div>
+                        </div>
+                        <button class="copy-btn" data-command="/scan"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="health stats security status">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>health</div>
+                            <div class="command-desc">View server security statistics</div>
+                        </div>
+                        <button class="copy-btn" data-command="/health"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="autopunish auto punish automatic">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>autopunish</div>
+                            <div class="command-desc">Set automatic punishments for violations</div>
+                        </div>
+                        <button class="copy-btn" data-command="/autopunish"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="whitelist add user trust">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>whitelist add</div>
+                            <div class="command-desc">Add a user to the anti-nuke whitelist</div>
+                        </div>
+                        <button class="copy-btn" data-command="/whitelist add"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="whitelist remove">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>whitelist remove</div>
+                            <div class="command-desc">Remove a user from the whitelist</div>
+                        </div>
+                        <button class="copy-btn" data-command="/whitelist remove"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="whitelist list view">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>whitelist list</div>
+                            <div class="command-desc">View all whitelisted users</div>
+                        </div>
+                        <button class="copy-btn" data-command="/whitelist list"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup / Configuration -->
+            <div class="category-block" data-category="setup">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-cog"></i>
+                        <div>
+                            <h2>Setup / Configuration</h2>
+                            <span class="count">7 commands</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="setlogs logs channel setup">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>setlogs</div>
+                            <div class="command-desc">Set the moderation logs channel</div>
+                        </div>
+                        <button class="copy-btn" data-command="/setlogs"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="setjoinlogs join leave logs member">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>setjoinlogs</div>
+                            <div class="command-desc">Set the join/leave logs channel</div>
+                        </div>
+                        <button class="copy-btn" data-command="/setjoinlogs"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="setwelcome welcome message greeting">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>setwelcome</div>
+                            <div class="command-desc">Setup the welcome message system</div>
+                        </div>
+                        <button class="copy-btn" data-command="/setwelcome"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="setupverify verification verify captcha">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>setupverify</div>
+                            <div class="command-desc">Setup the verification system</div>
+                        </div>
+                        <button class="copy-btn" data-command="/setupverify"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="autorole role join automatic">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>autorole</div>
+                            <div class="command-desc">Manage automatic role assignment</div>
+                        </div>
+                        <button class="copy-btn" data-command="/autorole"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="antispam anti spam filter">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>antispam</div>
+                            <div class="command-desc">Enable or disable anti-spam protection</div>
+                        </div>
+                        <button class="copy-btn" data-command="/antispam"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="setupticketpanel ticket panel support">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>setupticketpanel</div>
+                            <div class="command-desc">Setup the ticket support system</div>
+                        </div>
+                        <button class="copy-btn" data-command="/setupticketpanel"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Utility / Features -->
+            <div class="category-block" data-category="utility">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <div>
+                            <h2>Utility / Features</h2>
+                            <span class="count">5 commands</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="announce announcement embed">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>announce</div>
+                            <div class="command-desc">Send an embedded announcement</div>
+                        </div>
+                        <button class="copy-btn" data-command="/announce"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="giveaway give away contest prize">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>giveaway</div>
+                            <div class="command-desc">Start a giveaway with prizes</div>
+                        </div>
+                        <button class="copy-btn" data-command="/giveaway"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="report issue bug support">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>report</div>
+                            <div class="command-desc">Report an issue to server moderators</div>
+                        </div>
+                        <button class="copy-btn" data-command="/report"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="afk away From Keyboard">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>afk</div>
+                            <div class="command-desc">Set your AFK status</div>
+                        </div>
+                        <button class="copy-btn" data-command="/afk"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-item" data-keywords="unafk away back return">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>unafk</div>
+                            <div class="command-desc">Remove your AFK status</div>
+                        </div>
+                        <button class="copy-btn" data-command="/unafk"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other -->
+            <div class="category-block" data-category="other">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <div class="category-title">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h2>Server Info</h2>
+                            <span class="count">1 command</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down category-toggle"></i>
+                </div>
+                <div class="category-commands">
+                    <div class="command-item" data-keywords="server info profile stats statistics">
+                        <div class="command-info">
+                            <div class="command-name"><span class="prefix">/</span>server</div>
+                            <div class="command-desc">View server profile and statistics</div>
+                        </div>
+                        <button class="copy-btn" data-command="/server"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 RestoreX. All rights reserved. | <a href="https://f9xr.github.io/" target="_blank">Made by F9XR Team</a></p>
+        </footer>
+    </main>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const commandItems = document.querySelectorAll('.command-item');
+        const categoryBlocks = document.querySelectorAll('.category-block');
+        const resultsInfo = document.getElementById('resultsInfo');
+        const resultNum = document.getElementById('resultNum');
+        const noResults = document.getElementById('noResults');
+        const commandsSection = document.getElementById('commandsSection');
+
+        function updateResultsCount(count) {
+            resultNum.textContent = count;
+            resultsInfo.style.display = count === 0 ? 'none' : 'flex';
+            noResults.classList.toggle('show', count === 0);
+            commandsSection.style.display = count === 0 ? 'none' : 'block';
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            let totalCount = 0;
+
+            categoryBlocks.forEach(block => {
+                const items = block.querySelectorAll('.command-item');
+                let visibleInBlock = 0;
+
+                items.forEach(item => {
+                    const keywords = (item.dataset.keywords || '').toLowerCase();
+                    const name = item.querySelector('.command-name').textContent.toLowerCase();
+                    const desc = item.querySelector('.command-desc').textContent.toLowerCase();
+
+                    const matches = !query || keywords.includes(query) || name.includes(query) || desc.includes(query);
+                    item.style.display = matches ? 'flex' : 'none';
+                    if (matches) visibleInBlock++;
+                });
+
+                block.style.display = visibleInBlock > 0 ? 'block' : 'none';
+                totalCount += visibleInBlock;
+            });
+
+            updateResultsCount(totalCount);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            if (e.key === '/' && document.activeElement !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const category = tab.dataset.category;
+                let count = 0;
+
+                categoryBlocks.forEach(block => {
+                    const isMatch = category === 'all' || block.dataset.category === category;
+                    block.style.display = isMatch ? 'block' : 'none';
+                    if (isMatch) count += block.querySelectorAll('.command-item').length;
+                });
+
+                updateResultsCount(count);
+                searchInput.value = '';
+            });
+        });
+
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const command = btn.dataset.command;
+                navigator.clipboard.writeText(command).then(() => {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        btn.classList.remove('copied');
+                    }, 1500);
+                });
+            });
+        });
+
+        function toggleCategory(header) {
+            const block = header.closest('.category-block');
+            block.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+
+</html>

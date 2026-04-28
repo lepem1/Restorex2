@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         :root {
             --bg-color: #050505;
@@ -114,7 +116,7 @@
         .project-card:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .project-card:hover::before {
@@ -159,7 +161,7 @@
         footer {
             text-align: center;
             padding: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
             font-size: 0.9rem;
         }
@@ -175,8 +177,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .animate-in {
@@ -184,11 +193,20 @@
             opacity: 0;
         }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="logo">F9XR<span>.</span></div>
@@ -204,10 +222,82 @@
             <a href="RestoreX/index.html" class="project-card animate-in delay-2">
                 <span class="project-category">Discord Bot</span>
                 <h2 class="project-title">RestoreX</h2>
-                <p class="project-desc">A security and moderation-focused Discord bot built to protect servers from raids, nukes, and malicious activity in real-time.</p>
+                <p class="project-desc">A security and moderation-focused Discord bot built to protect servers from
+                    raids, nukes, and malicious activity in real-time.</p>
                 <div class="project-link">
                     View Project
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </a>
+            <a href="AJFitnessGYM/index.html" class="project-card animate-in delay-2">
+                <span class="project-category">Fitness Website</span>
+                <h2 class="project-title">AJ Fitness GYM</h2>
+                <p class="project-desc">Modern fitness gym website with membership plans, class schedules, and training
+                    programs for all fitness levels.</p>
+                <div class="project-link">
+                    View Project
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </a>
+            <a href="GatiGo/index.html" class="project-card animate-in delay-2">
+                <span class="project-category">Carpooling Platform</span>
+                <h2 class="project-title">GatiGo</h2>
+                <p class="project-desc">Tech-driven carpooling platform connecting drivers with empty seats to commuters
+                    traveling the same route. Intra-city and inter-city travel.</p>
+                <div class="project-link">
+                    View Project
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </a>
+            <a href="zettha-dash/dynamic_discounting_platform.html" class="project-card animate-in delay-2">
+                <span class="project-category">Dashboard</span>
+                <h2 class="project-title">Zettha Dash</h2>
+                <p class="project-desc">Enterprise discount and invoice management dashboard with dynamic discounting,
+                    sovereign glass, and market pending features.</p>
+                <div class="project-link">
+                    View Project
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </a>
+            <a href="MudraCrypto/index.html" class="project-card animate-in delay-2">
+                <span class="project-category">Web3 Education</span>
+                <h2 class="project-title">MudraCrypto</h2>
+                <p class="project-desc">Learn to earn free cryptocurrency through verified and secure methods.
+                    Minimalist Web3 education platform for modern seekers.</p>
+                <div class="project-link">
+                    View Project
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </a>
+            <a href="Waveclickinfo/index.html" class="project-card animate-in delay-2">
+                <span class="project-category">Business Website</span>
+                <h2 class="project-title">Waveclickinfo</h2>
+                <p class="project-desc">Professional business website with services, blog, case studies, pricing, and
+                    contact pages for modern companies.</p>
+                <div class="project-link">
+                    View Project
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
@@ -218,7 +308,8 @@
     </main>
 
     <footer>
-        MADE BY F9XR TEAM (<a href="https://f9xr.github.io/" target="_blank">https://f9xr.github.io/</a>)
+        <a href="https://f9xr.github.io/" target="_blank">MADE BY F9XR TEAM</a>
     </footer>
 </body>
+
 </html>
